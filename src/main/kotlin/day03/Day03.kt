@@ -7,7 +7,18 @@ import readInput
 class Day03 : Day {
 
     override fun partOne(): String {
-        TODO("Not yet implemented")
+        val input = readInput("main/kotlin/day03/input")
+        val valid = input.flatMap {
+            findValidInputs(it)
+        }
+        val digitPairs = valid.map {
+            splitDigits(it.value)
+        }
+        val total = digitPairs.sumOf {
+            val (a, b) = it
+            multiplyDigits(a, b)
+        }
+        return total.toString()
     }
 
     override fun partTwo(): String {
@@ -31,22 +42,6 @@ class Day03 : Day {
         println("Total = $total")
 
         assert(total == 161)
-    }
-
-    @Test
-    fun partOneCalculation() {
-        val input = readInput("main/kotlin/day03/input")
-        val valid = input.flatMap {
-            findValidInputs(it)
-        }
-        val digitPairs = valid.map {
-            splitDigits(it.value)
-        }
-        val total = digitPairs.sumOf {
-            val (a, b) = it
-            multiplyDigits(a, b)
-        }
-        println(total)
     }
 
     private fun findValidInputs(input: String): Sequence<MatchResult> {
